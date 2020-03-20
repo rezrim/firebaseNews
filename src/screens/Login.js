@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {db} from '../database/DBconfig'
 import { CommonActions } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage'
 
 function Login(props) {
   const [register, setRegister] = React.useState(false)
@@ -12,7 +13,20 @@ function Login(props) {
   const [password, setPassword] = React.useState("")
   const [email, setEmail] = React.useState("")
   const [konfPassword, setKonfPassword] = React.useState("")
-  const [dataDb, setDataDB] = React.useState(null)
+
+  React.useEffect(() => {
+    AsyncStorage.getItem('username').then(value =>{
+        if(value!=null){
+          props.navigation.dispatch(CommonActions.reset({
+            index: 0,
+            routes: [
+              { name: 'Home' },
+            ]
+          }))
+        }
+      }
+    );
+  })
 
   const saveUser = () => {
     if(konfPassword === password){
@@ -42,6 +56,7 @@ function Login(props) {
       items.forEach(child => {
         console.log(child.password)
         if(child.password == password){
+          AsyncStorage.setItem('username', username);
           props.navigation.dispatch(CommonActions.reset({
             index: 0,
             routes: [

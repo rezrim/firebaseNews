@@ -12,6 +12,7 @@ import NewsScreen from './src/screens/News'
 import AddNewsScreen from './src/screens/AddNews'
 import EditNewsScreen from './src/screens/EditNews'
 import DetailNewsScreen from './src/screens/DetailNews'
+import LogoutScreen from './src/screens/Logout'
 
 import { Card, Left, Thumbnail, Title } from 'native-base';
 
@@ -44,14 +45,7 @@ const myDrawer=()=>{
       <Drawer.Navigator drawerContent={props=> <CustomDrawerContent {...props}/>}>
         <Drawer.Screen name="Home" component={HomeScreen}/>
         <Drawer.Screen name="News" component={NewsScreen}/>
-        <Drawer.Screen name="Logout" component={() => {
-          props.navigation.dispatch(CommonActions.reset({
-            index: 0,
-            routes: [
-              { name: 'Login' },
-            ]
-          }));
-        }}/>
+        <Drawer.Screen name="Logout" component={LogoutScreen}/>
       </Drawer.Navigator>
   )
 }
